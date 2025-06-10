@@ -30,6 +30,8 @@ jobs:
           
       - name: ServiceNow CI/CD Publish App
         id: publish_app
+      
+        
         uses: ServiceNow/sncicd-publish-app@2.0.1
         with:
           versionTemplate: 1.1
@@ -37,6 +39,8 @@ jobs:
           # Optional, add +X to version number. Default: 1 
           #incrementBy: 1
           #isAppCustomization: true
+      - name: Debug Version
+        run: echo "Published version is:" ${{ steps.publish_app.outputs.newVersion }}
         env:
           nowUsername: ${{ secrets.SN_USERNAME }}
           nowPassword: ${{ secrets.SN_PASSWORD }}
