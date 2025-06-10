@@ -30,8 +30,6 @@ jobs:
           
       - name: ServiceNow CI/CD Publish App
         id: publish_app
-      
-        
         uses: ServiceNow/sncicd-publish-app@2.0.1
         with:
           versionTemplate: 1.1
@@ -39,18 +37,12 @@ jobs:
           # Optional, add +X to version number. Default: 1 
           #incrementBy: 1
           #isAppCustomization: true
-      - name: Debug Version
-        run: echo "Published version is:" ${{ steps.publish_app.outputs.newVersion }}
         env:
           nowUsername: ${{ secrets.SN_USERNAME }}
           nowPassword: ${{ secrets.SN_PASSWORD }}
           nowSourceInstance: ${{ secrets.SN_DEV_INSTANCE }}
           appSysID: ${{ secrets.SN_APP_SYSID }}
-        
-    # This is required to pass the version number output from Publish App 
-    # to the input for Install App in the next job! This is because the jobs 
-    # run on different Linux instances, so without this Install App won't know
-    # what to install.
+
     outputs:
       publishversion: ${{ steps.publish_app.outputs.newVersion }}
   
@@ -67,28 +59,16 @@ jobs:
     name: Deploy to Prod
     runs-on: ubuntu-latest
    # if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    
     steps:
-      
       - name: ServiceNow CI/CD Install App
         id: install_app_prod
         uses: ServiceNow/sncicd-install-app@2.0.0
-        
-      
-      
         with:
-          version: ${{ needs.build.outputs.publishversion }}
-          # Only applicable if Application Customization is active. 
-          # Version of the base application on which to apply the customizations
-          
-          # baseAppVersion: 1.1.63
-          # Only applicable if Application Customization is active and the associated 
-          # application is a higher version than the currently installed version
-          # Default: false
-          autoUpgradeBaseApp: true
-
+             version: ${{ needs.build.outputs.publishversion }}
+             autoUpgradeBaseApp: true
         env:
-          nowUsername: ${{ secrets.SN_USERNAME }}
-          nowPassword: ${{ secrets.SN_PASSWORD }}
-          nowInstallInstance: ${{ secrets.SN_PROD_INSTANCE }}
-          appSysID: 32d239adc3862610ac17285bb0013104
-          #appSysID: ${{ secrets.SN_APP_SYSID }}
+           nowUsername: ${{ secrets.SN_USERNAME }}
+           nowPassword: ${{ secrets.SN_PASSWORD }}
+           nowInstallInstance: ${{ secrets.SN_PROD_INSTANCE }}
+           appSysID: bf3669e993c2e61047c7b0b47aba10b1
