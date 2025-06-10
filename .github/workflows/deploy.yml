@@ -82,4 +82,5 @@ jobs:
           nowUsername: ${{ secrets.SN_USERNAME }}
           nowPassword: ${{ secrets.SN_PASSWORD }}
           nowInstallInstance: ${{ secrets.SN_PROD_INSTANCE }}
-          appSysID: ${{ secrets.SN_APP_SYSID }}
+          appSysID: bf3669e993c2e61047c7b0b47aba10b1
+          #appSysID: ${{ secrets.SN_APP_SYSID }}
