@@ -49,6 +49,9 @@ jobs:
     # what to install.
     outputs:
       publishversion: ${{ steps.publish_app.outputs.newVersion }}
+  
+   
+
     
 
   deployprod:
@@ -78,11 +81,10 @@ jobs:
           # application is a higher version than the currently installed version
           # Default: false
           autoUpgradeBaseApp: true
-          appScope: Github_automation
 
         env:
           nowUsername: ${{ secrets.SN_USERNAME }}
           nowPassword: ${{ secrets.SN_PASSWORD }}
           nowInstallInstance: ${{ secrets.SN_PROD_INSTANCE }}
-          appSysID: bf3669e993c2e61047c7b0b47aba10b1
+          appSysID: 32d239adc3862610ac17285bb0013104
           #appSysID: ${{ secrets.SN_APP_SYSID }}
