@@ -78,6 +78,8 @@ jobs:
           # application is a higher version than the currently installed version
           # Default: false
           autoUpgradeBaseApp: true
+          appScope: Github_automation
+
         env:
           nowUsername: ${{ secrets.SN_USERNAME }}
           nowPassword: ${{ secrets.SN_PASSWORD }}
